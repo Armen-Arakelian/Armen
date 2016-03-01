@@ -40,5 +40,7 @@ int list_getCount(list_t *self);
 town list_getTown(list_t *self, int pos);
 void list_setTown(list_t *self, town newTown, int pos);
 
+void list_print(list_t *self);
+
 
 #endif // LIST_H_INCLUDED
