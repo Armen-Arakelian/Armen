@@ -11,22 +11,18 @@ typedef enum
     ERROR
 } list_status_t;
 
-typedef struct Coord
+typedef struct coord
 {
     int x, y;
 } coord;
 
-typedef struct Town
+typedef struct town
 {
   coord place;
   char name[100];
 } town;
 
-typedef struct list_s
-{
-    town citys[MAX_LIST_SIZE];
-    int count;
-}list_t ;
+typedef struct list_s list_t;
 
 list_t * list_new();
 void list_delete(list_t * self);

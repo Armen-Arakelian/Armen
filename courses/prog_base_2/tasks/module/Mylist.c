@@ -3,32 +3,13 @@
 #include "list.h"
 #include <math.h>
 
-/*typedef struct coord
-{
-    int x, y;
-} coord;*/
-
-/*typedef struct town
-{
-  coord place;
-  char name[100];
-} town;*/
-
-/*typedef struct list_s
+static struct list_s
 {
     town citys[MAX_LIST_SIZE];
     int count;
-}list_t ;*/
+};
 
-/*typedef struct list_s list_t;
-typedef enum
-{
-    LIST_EMPTY,
-    LIST_FULL,
-    LIST_OK,
-    ERROR
-} list_status_t;
-*/
+
 list_t * list_new()
 {
     list_t *ls = malloc(sizeof(struct list_s));
