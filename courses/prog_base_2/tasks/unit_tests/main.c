@@ -35,7 +35,8 @@ static void add_town_townIsOk(void **state)
     check.place.x = 5;
     check.place.y = 5;
     list_put(list, tw, 0);
-    assert_true(list_getTown(list, 0).place.x == check.place.x && list_getTown(list, 0).place.y == check.place.y);
+    assert_int_equal(list_getTown(list, 0).place.x, check.place.x);
+    assert_int_equal(list_getTown(list, 0).place.y, check.place.y);
     list_delete(list);
 }
 
@@ -63,7 +64,8 @@ static void remove_position_townIsOk(void **state)
     list_put(list, tw, 0);
     list_put(list, tw1, 1);
     check = list_pop(list, 1, status);
-    assert_true(tw1.place.x == check.place.x && tw1.place.y == check.place.y);
+    assert_int_equal(tw1.place.x, check.place.x);
+    assert_int_equal(tw1.place.y, check.place.y);
     list_delete(list);
 }
 
@@ -76,7 +78,8 @@ static void peek_positin_peekedIsOk(void **state)
     tw.place.y = 5;
     list_put(list, tw, 0);
     check  = list_peek(list, 0, status);
-    assert_true(check.place.x == tw.place.x && check.place.y == tw.place.y);
+    assert_int_equal(check.place.x, tw.place.x);
+    assert_int_equal(check.place.y, tw.place.y);
     list_delete(list);
 }
 
@@ -114,7 +117,8 @@ static void getTown_position_TownIsOk(void **state)
     tw.place.y = 5;
     list_put(list, tw, 0);
     town check = list_getTown(list, 0);
-    assert_true(check.place.x == tw.place.x && check.place.y == tw.place.y);
+    assert_int_equal(check.place.x, tw.place.x);
+    assert_int_equal(check.place.y, tw.place.y);
     list_delete(list);
 }
 
@@ -129,7 +133,8 @@ static void setTown_position_TownIsOk(void **state)
     list_put(list, tw, 0);
     list_setTown(list,newTw, 0);
     town check = list_getTown(list, 0);
-    assert_true(check.place.x == newTw.place.x && check.place.y == newTw.place.y);
+    assert_int_equal(check.place.x, newTw.place.x);
+    assert_int_equal(check.place.y, newTw.place.y);
     list_delete(list);
 }
 
