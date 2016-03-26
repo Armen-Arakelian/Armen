@@ -6,6 +6,8 @@
 #include "heap.h"
 #include "memory.h"
 
+int memory_getStrSize();
+
 static struct heap_s
 {
     memory_t * memory[MAX_MEM_SIZE];
@@ -13,30 +15,30 @@ static struct heap_s
     int count;
 };
 
-static int number = 1;
-
-heap_t * heap_new()
+heap_t * heap_new(int num)
 {
     heap_t * hp = malloc(sizeof(struct heap_s));
     hp->count = 0;
-    hp->num = number;
-    number++;
+    hp->num = num;
     return hp;
 }
 
 void heap_delete(heap_t * self)
 {
-    number--;
     free(self);
 }
 
-heap_status_t heap_memAdd(heap_t * hp, int memSize, char * memory)
+memory_t * heap_memAdd(heap_t * hp, heap_status_t * status)
 {
     if(hp->count == MAX_MEM_SIZE)
-        return HEAP_FULL;
-    hp->memory[hp->count] = malloc(sizeof(memory_t));
-    memory_add(hp->memory[hp->count], memSize, memory);
-    (hp->count)++;
+        {
+            *status = HEAP_FULL;
+            return NULL;
+        }
+    status = HEAP_OK;
+    hp->memory[hp->count] = malloc(memory_getStrSize());
+    hp->count++;
+    return hp->memory[hp->count-1];
 }
 
 heap_status_t heap_memDelete(heap_t * hp, int memCount)
@@ -46,44 +48,15 @@ heap_status_t heap_memDelete(heap_t * hp, int memCount)
     if(memCount >= hp->count || memCount < 0)
     {
         printf("Invalid index");
-        return ERROR;
+        return HEAP_ERROR;
     }
-    memory_delete(hp->memory[memCount]);
     for(int i = 0; i < hp->count - memCount; i++)
     {
         hp->memory[memCount] = hp->memory[memCount+1];
     }
+    free(hp->memory[hp->count-1]);
     hp->count--;
-}
-
-heap_status_t heap_memSet(heap_t * hp, int memSize, char * memory, int memCount)
-{
-    if(memCount >= hp->count || memCount < 0)
-    {
-        printf("Invalid index");
-        return ERROR;
-    }
-    memory_set(hp->memory[memCount], memSize, memory, memCount);
-}
-
-heap_status_t heap_memGet(heap_t * hp, int memSize, char * memory, int memCount)
-{
-    if(memCount >= hp->count || memCount < 0)
-    {
-        printf("Invalid index");
-        return ERROR;
-    }
-    memory_get(hp->memory[memCount], memSize, memory);
-}
-
-int heap_memGetSize(heap_t * hp, int memCount)
-{
-    if(memCount > hp->count || memCount < 0)
-    {
-        printf("Invalid index");
-        return;
-    }
-    return memory_getSize(hp->memory[memCount]);
+    return HEAP_OK;
 }
 
 int heap_getCount(heap_t * hp)

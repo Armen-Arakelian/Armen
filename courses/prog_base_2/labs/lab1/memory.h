@@ -1,16 +1,21 @@
 #ifndef MEMORY_H_INCLUDED
 #define MEMORY_H_INCLUDED
 
-typedef struct
-{
-    void * mem;
-    int memSize;
-} memory_t;
+typedef struct memory_s memory_t;
 
-void memory_add(memory_t * self, int memSize, char * memory);
-void memory_delete(memory_t * self);
-void memory_set(memory_t * self, int memSize, char * memory, int memCount);
-void memory_get(memory_t * self, int memSize, char * memory);
-int memory_getSize(memory_t * self);
+typedef enum
+{
+    MEM_OK,
+    MEM_FULL,
+    MEM_EMPTY,
+    MEM_ERROR
+} mem_status_t;
+
+mem_status_t memory_setChar(memory_t * memPoint, int memSize, char * memory);
+mem_status_t memory_setInt(memory_t * memPoint, int memSize, int * memory);
+mem_status_t memory_getChar(memory_t * memPoint, int memSize, char * memory);
+mem_status_t memory_getInt(memory_t * memPoint, int memSize, int * memory);
+
+int memory_getSize(memory_t * memPoint);
 
 #endif // MEMORY_H_INCLUDED

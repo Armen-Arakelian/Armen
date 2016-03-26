@@ -1,39 +1,52 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "heap.h"
 
-#include "memory.h"
-
-void memory_add(memory_t * self, int memSize, char * memory)
- {
-     self->mem = (char *)malloc(memSize);
-     memcpy((char *)self->mem, memory, memSize);
-     self->memSize = memSize;
- }
-
-void memory_delete(memory_t * self)
+static struct memory_s
 {
-    free(self->mem);
-    self->memSize = 0;
+    void * mem;
+    int memSize;
+};
+
+mem_status_t memory_setChar(memory_t * memPoint, int memSize, char * memory)
+{
+    memPoint->mem = malloc(memSize);
+    memcpy((char *)memPoint->mem, memory, memSize);
+    memPoint->memSize = memSize;
+    return MEM_OK;
 }
 
-void memory_set(memory_t * self, int memSize, char * memory, int memCount)
+mem_status_t memory_setInt(memory_t * memPoint, int memSize, int * memory)
 {
-    free(self->mem);
-    memcpy((char *)self->mem, memory, memSize);
-    self->memSize = memSize;
+    memPoint->mem = malloc(memSize);
+    memcpy((int *)memPoint->mem, memory, memSize);
+    memPoint->memSize = memSize;
+    return MEM_OK;
 }
 
-void memory_get(memory_t * self, int memSize, char * memory)
+
+mem_status_t memory_getChar(memory_t * memPoint, int memSize, char * memory)
 {
-     memcpy((char *)memory, self->mem, memSize);
+    memcpy(memory, (char *)memPoint->mem, memSize);
+    return HEAP_OK;
 }
 
-int memory_getSize(memory_t * self)
+mem_status_t memory_getInt(memory_t * memPoint, int memSize, int * memory)
 {
-    return self->memSize;
+    memcpy(memory, (int *)memPoint->mem, memSize);
+    return HEAP_OK;
 }
 
+int memory_getSize(memory_t * memPoint)
+{
+    return memPoint->memSize;
+}
+
+int memory_getStrSize()
+{
+    return sizeof(struct memory_s);
+}
 
 
 
