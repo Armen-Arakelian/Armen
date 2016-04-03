@@ -2,7 +2,7 @@
 #include<winsock2.h>
 #include <string.h>
 
-#pragma comment(lib,"ws2_32.lib") //Winsock Library
+#pragma comment(lib,"ws2_32.lib")
 
 #define PORT 80
 #define MAX_REP_LEN 20480
@@ -26,7 +26,6 @@ return 1;
 }
 printf("Initialised.\n");
 
-//Create a socket
 if((s = socket(AF_INET , SOCK_STREAM , 0 )) == INVALID_SOCKET)
 {
 printf("Could not create socket : %d" , WSAGetLastError());
@@ -38,7 +37,6 @@ server.sin_addr.s_addr = inet_addr("216.58.214.241");
 server.sin_family = AF_INET;
 server.sin_port = htons(PORT);
 
-//Connect to remote server
 int code;
 if ((code = connect(s, (struct sockaddr *)&server , sizeof(server))) < 0)
 {
@@ -48,35 +46,20 @@ return 1;
 puts("Connected");
 
 char request[200];
+firstRequest(s, request, hostName);
 
-sprintf(request, "GET /var/1 HTTP/1.1\r\nHost:%s\r\n\r\n", hostName);
-sendReq(s, request, strlen(request));
+getSecret(s, server_reply, &recv_size);
 
-recv_size = Recv(s, server_reply);
+secondRequest(s, request, server_reply, hostName);
 
-strcpy(server_reply, strstr(server_reply, "secret="));
 
-sprintf(request, "GET /var/1?%s HTTP/1.1\r\nHost:%s\r\n\r\n", server_reply, hostName);
-sendReq(s, request, strlen(request));
+char * result[200];
+getResultName(s, server_reply, result, &recv_size);
 
-recv_size = Recv(s, server_reply);
+thirdRequest(s, request, server_reply, result, hostName);
 
-server_reply[recv_size] = '\0';
-printf("%s", server_reply);
-strcpy(server_reply - 4, strstr(server_reply, "\r\n\r\n"));
-char name[100];
-getName(server_reply, name);
-printf("\n%s", name);
-char result[100];
-sprintf(result, "result=%s", name);
-sprintf(request, "POST /var/1 HTTP/1.1\r\nHost:%s\r\nContent-Length: %d\r\n\r\n%s", hostName, strlen(result), result);
+getResult(s, server_reply, recv_size);
 
-sendReq(s, request, strlen(request));
-
-recv_size = Recv(s, server_reply);
-
-server_reply[recv_size] = '\0';
-printf("\n%s", server_reply);
 closesocket(s);
 WSACleanup();
 return 0;
@@ -105,3 +88,47 @@ int Recv(SOCKET s, char * server_reply)
     return recv_size;
 }
 
+void firstRequest(SOCKET s, char * request, const char * hostName)
+{
+    sprintf(request, "GET /var/1 HTTP/1.1\r\nHost:%s\r\n\r\n", hostName);
+    sendReq(s, request, strlen(request));
+}
+
+void getSecret(SOCKET s, char * server_reply, int * recv_size)
+{
+    *recv_size = Recv(s, server_reply);
+    strcpy(server_reply, strstr(server_reply, "secret="));
+}
+
+
+void secondRequest(SOCKET s, char * request, char * server_reply, const char * hostName)
+{
+    sprintf(request, "GET /var/1?%s HTTP/1.1\r\nHost:%s\r\n\r\n", server_reply, hostName);
+    sendReq(s, request, strlen(request));
+}
+
+void getResultName(SOCKET s, char * server_reply, char * result, int * recv_size)
+{
+    *recv_size = Recv(s, server_reply);
+    server_reply[*recv_size] = '\0';
+    printf("%s", server_reply);
+    strcpy(server_reply - 4, strstr(server_reply, "\r\n\r\n"));
+    char name[100];
+    getName(server_reply, name);
+    printf("\n%s", name);
+    sprintf(result, "result=%s", name);
+}
+
+void thirdRequest(SOCKET s, char * request, char * server_reply, char * result, const char * hostName)
+{
+    sprintf(request, "POST /var/1 HTTP/1.1\r\nHost:%s\r\nContent-Length: %d\r\n\r\n%s", hostName, strlen(result), result);
+    sendReq(s, request, strlen(request));
+}
+
+
+void getResult(SOCKET s, char * server_reply, int recv_size)
+{
+    recv_size = Recv(s, server_reply);
+    server_reply[recv_size] = '\0';
+    printf("\n%s", server_reply);
+}
