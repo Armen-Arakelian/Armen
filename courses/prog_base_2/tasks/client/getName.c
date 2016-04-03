@@ -7,11 +7,10 @@ typedef struct
     int mark;
 } Student;
 
-char * getName(char * buf)
+void getName(char * buf, char * result)
 {
     Student st;
     int checkMark = 0;
-    char * result;
     buf = strtok(buf, "\n");
     do
     {
@@ -24,5 +23,4 @@ char * getName(char * buf)
         buf = strtok('\0', "\n");
     }
     while(buf);
-    return result;
 }
