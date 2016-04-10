@@ -1,0 +1,35 @@
+[
+   {
+      "name":"Jon",
+      "lastname":"Smith",
+      "diagnosis":"bone fracture",
+      "doctor":{
+         "lastname":"Li",
+         "specialization":"surgeon"
+      },
+      "age":35,
+      "mass":81.25
+   },
+   {
+      "name":"Mike",
+      "lastname":"Jonson",
+      "diagnosis":"periodontitis",
+      "doctor":{
+         "lastname":"Yang",
+         "specialization":"dentist"
+      },
+      "age":44,
+      "mass":73.47
+   },
+   {
+      "name":"Joanna",
+      "lastname":"Green",
+      "diagnosis":"flu",
+      "doctor":{
+         "lastname":"White",
+         "specialization":"virusologist"
+      },
+      "age":21,
+      "mass":43.98
+   }
+]
