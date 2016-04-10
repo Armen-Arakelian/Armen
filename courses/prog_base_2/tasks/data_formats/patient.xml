@@ -11,7 +11,7 @@
     </doctor>
     <age>35</age>
     <mass>81.25</mass>
-    <hospitalisedDate>11-01-2016</hospitalisedDate>
+    <hospitalisedDate>2016-01-11</hospitalisedDate>
   </patient>
   <patient department="stomatology">
     <name>Mike</name>
@@ -23,7 +23,7 @@
     </doctor>
     <age>44</age>
     <mass>73.47</mass>
-    <hospitalisedDate>03-11-2015</hospitalisedDate>
+    <hospitalisedDate>2015-11-03</hospitalisedDate>
   </patient>
   <patient department="virology">
     <name>Joanna</name>
@@ -35,6 +35,6 @@
     </doctor>
     <age>21</age>
     <mass>43.98</mass>
-    <hospitalisedDate>23-03-2016</hospitalisedDate>
+    <hospitalisedDate>2016-03-23</hospitalisedDate>
    </patient>
 </clinic>

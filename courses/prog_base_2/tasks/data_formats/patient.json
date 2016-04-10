@@ -9,7 +9,7 @@
       },
       "age":35,
       "mass":81.25,
-      "hospitalisedDate":"11-01-2016"
+      "hospitalisedDate":"2016-01-11"
    },
    {
       "name":"Mike",
@@ -21,7 +21,7 @@
       },
       "age":44,
       "mass":73.47,
-      "hospitalisedDate":"03-11-2015"
+      "hospitalisedDate":"2015-11-03"
    },
    {
       "name":"Joanna",
@@ -33,6 +33,6 @@
       },
       "age":21,
       "mass":43.98,
-      "hospitalisedDate":"23-03-2016"
+      "hospitalisedDate":"2016-03-23"
    }
 ]

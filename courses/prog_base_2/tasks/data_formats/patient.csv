@@ -1,4 +1,4 @@
 name,lastname,diagnosis,doctorName,doctorSpecialization,age,mass, hospitalisedDate
-Jon,Smith,bone fracture,Li,surgeon,35,81.25, 11-01-2016
-Mike,Jonson,periodontitis,Yang,dentist,44,73.47, 03-11-2015
-Joanna,Green,flu,White,virusologist,21,43.98, 23-03-2016
+Jon,Smith,bone fracture,Li,surgeon,35,81.25, 2016-01-11
+Mike,Jonson,periodontitis,Yang,dentist,44,73.47, 2015-11-03
+Joanna,Green,flu,White,virusologist,21,43.98, 2016-03-23
