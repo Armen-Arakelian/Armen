@@ -20,6 +20,7 @@ struct patient_s
     Doctor * doctor;
     int age;
     double mass;
+    char hospitalisedDate[100];
 };
 
 patient_t * patient_new()
@@ -68,11 +69,12 @@ void patient_parse(char * text, patient_t * patients[])
         cJSON * jDoctor = cJSON_GetObjectItem(jItem, "doctor");
         strcpy(patients[i]->doctor->lastname, cJSON_GetObjectItem(jDoctor, "lastname")->valuestring);
         strcpy(patients[i]->doctor->specialization, cJSON_GetObjectItem(jDoctor, "specialization")->valuestring);
+        strcpy(patients[i]->hospitalisedDate, cJSON_GetObjectItem(jItem, "hospitalisedDate")->valuestring);
     }
     for (int i = 0; i < count; i++)
     {
-        printf("Name: \t%s\nSurname: \t%s\nYear: \t%i\nScore:\t%f\nBirth:\t%s\n", patients[i]->name, patients[i]->lastname, patients[i]->diagnosis, patients[i]->age, patients[i]->mass);
-        printf("Group:\t%s (%s)\n\n", patients[i]->doctor->lastname, patients[i]->doctor->specialization);
+        printf("name: \t%s\nlastname: \t%s\ndiagnosis: \t%s\nage:\t%i\nBirth:\t%f\hospitalisedDate: \t%s\n", patients[i]->name, patients[i]->lastname, patients[i]->diagnosis, patients[i]->age, patients[i]->mass, patients[i]->hospitalisedDate);
+        printf("Doctor:\t%s (%s)\n\n", patients[i]->doctor->lastname, patients[i]->doctor->specialization);
     }
     cJSON_Delete(jList);
 }
