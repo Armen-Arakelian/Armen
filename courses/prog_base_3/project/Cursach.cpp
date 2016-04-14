@@ -11,8 +11,7 @@ void Reshape(int width, int height)
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(-1, 1, -1, 1);
-	glMatrixMode(GL_MODELVIEW);
+	gluPerspective(100, 100, 100, 100);
 
 	WindW = width;
 	WindH = height;
@@ -26,13 +25,17 @@ void Display(void)
 	glColor3f(0.0f, 0.6f, 0.9f);
 
 	glPushMatrix();
-	glRotatef(alpha, 0.0f, 0.0f, 1.0f);
+	glRotatef(alpha, alpha, 0.0f, 1.0f);
 	alpha += 5;
 	if (alpha > 359) 
 		alpha = 0;
 	glBegin(GL_LINES);
 	glVertex3f(-0.5f, 0.5f, 0.7f);
 	glVertex3f(0.5f, -0.5f, 0.5f);
+	glVertex3f(-0.2f, 0.2f, 0.3f);
+	glVertex3f(0.2f, -0.2f, 0.4f);
+	glVertex3f(-0.1f, 0.1f, 0.15f);
+	glVertex3f(0.1f, -0.1f, 0.2f);
 	glEnd();
 	glPopMatrix();
 
