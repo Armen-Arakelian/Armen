@@ -14,7 +14,7 @@ void Reshape(int width, int height)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(130, 1, 50, 0);
-	gluLookAt(1.0, 1.5, 2.0, 1.0, 1.5, -10.0, 0.0, 1.0, 0.0);
+	gluLookAt(1.0, 2.0, 2.0, 1.0, 1.5, -10.0, 0.0, 1.0, 0.0);
 
 	WindW = width;
 	WindH = height;
@@ -28,14 +28,23 @@ void Display(void)
 	glColor3f(0.0f, 0.6f, 0.9f);
 
 	glPushMatrix();
-	glTranslatef(1, 1, alpha);
+	glTranslatef(0, 0, alpha);
 	alpha += beta;
 	if (alpha > 1 || alpha < -1) 
 		beta = -beta;
-	glBegin(GL_TRIANGLES);
-	glVertex3f(0.5f, 0.5f, 0.7f);
-	glVertex3f(-0.5f, -0.5f, 0.5f);
-	glVertex3f(-0.1f, 0.0f, 0.3f);
+	glBegin(GL_QUADS);
+	glVertex3f(2.2f, 0.0f, 0.3f);
+	glVertex3f(2.2f, 0.5f, 0.3f);
+	glVertex3f(1.6f, 0.0f, 0.3f);
+	glVertex3f(1.6f, 0.5f, 0.3f);
+	glVertex3f(1.5f, 0.0f, 1.0f);
+	glVertex3f(1.5f, 0.5f, 1.0f);
+	glVertex3f(0.6f, 0.0f, 1.0f);
+	glVertex3f(0.6f, 0.5f, 1.0f);
+	glVertex3f(0.5f, 0.0f, 0.8f);
+	glVertex3f(0.5f, 0.5f, 0.8f);
+	glVertex3f(-0.2f, 0.0f, 0.8f);
+	glVertex3f(-0.2f, 0.5f, 0.8f);
 	glEnd();
 	glPopMatrix();
 
