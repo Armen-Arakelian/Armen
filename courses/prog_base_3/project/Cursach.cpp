@@ -6,8 +6,10 @@
 
 int WindW, WindH;
 int i;
-double alpha = 0;
-double beta = 0.1;
+double alphaR = 0;
+double alphaL = 0;
+double alphaM = 0;
+double beta = 0.02;
 
 void Reshape(int width, int height) 
 {
@@ -28,15 +30,34 @@ void Display(void)
 	glColor3f(0.0f, 0.6f, 0.9f);
 
 	glPushMatrix();
-	glTranslatef(0, 0, alpha);
-	alpha += beta;
-	if (alpha > 1 || alpha < -1)
-		beta = -beta;
+	glTranslatef(0, 0, alphaR);
+	alphaR += beta;
+	if (alphaR > 1)
+	{
+		alphaR = rand() % 9;
+		alphaR = alphaR / 10;
+	}
 	Obstacle * ob1 = new Obstacle(RIGHT);
-	Obstacle * ob2 = new Obstacle(LEFT);
-	Obstacle * ob3 = new Obstacle(MIDDLE);
 	ob1->spawnObstacle();
+
+	glTranslatef(0, 0, alphaM);
+	alphaM += beta;
+	if (alphaM > 1)
+	{
+		alphaM = rand() % 9;
+		alphaM = alphaM / 10;
+	}
+	Obstacle * ob2 = new Obstacle(MIDDLE);
 	ob2->spawnObstacle();
+
+	glTranslatef(0, 0, alphaL);
+	alphaL += beta;
+	if (alphaL > 1)
+	{
+		alphaL = rand() % 9;
+		alphaL = alphaL / 10;
+	}
+	Obstacle * ob3 = new Obstacle(LEFT);
 	ob3->spawnObstacle();
 	glPopMatrix();
 	glPushMatrix();
