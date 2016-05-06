@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <GL/glut.h>
 #include <math.h>
+#include "Obstacle.h"
 
 int WindW, WindH;
 int i;
@@ -23,31 +24,21 @@ void Reshape(int width, int height)
 void Display(void) 
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-
 	glLineWidth(3);
 	glColor3f(0.0f, 0.6f, 0.9f);
 
 	glPushMatrix();
 	glTranslatef(0, 0, alpha);
 	alpha += beta;
-	if (alpha > 1 || alpha < -1) 
+	if (alpha > 1 || alpha < -1)
 		beta = -beta;
-	glBegin(GL_QUADS);
-	glVertex3f(2.2f, 0.0f, 0.3f);
-	glVertex3f(2.2f, 0.5f, 0.3f);
-	glVertex3f(1.6f, 0.0f, 0.3f);
-	glVertex3f(1.6f, 0.5f, 0.3f);
-	glVertex3f(1.5f, 0.0f, 1.0f);
-	glVertex3f(1.5f, 0.5f, 1.0f);
-	glVertex3f(0.6f, 0.0f, 1.0f);
-	glVertex3f(0.6f, 0.5f, 1.0f);
-	glVertex3f(0.5f, 0.0f, 0.8f);
-	glVertex3f(0.5f, 0.5f, 0.8f);
-	glVertex3f(-0.2f, 0.0f, 0.8f);
-	glVertex3f(-0.2f, 0.5f, 0.8f);
-	glEnd();
+	Obstacle * ob1 = new Obstacle(RIGHT);
+	Obstacle * ob2 = new Obstacle(LEFT);
+	Obstacle * ob3 = new Obstacle(MIDDLE);
+	ob1->spawnObstacle();
+	ob2->spawnObstacle();
+	ob3->spawnObstacle();
 	glPopMatrix();
-
 	glPushMatrix();
 	glBegin(GL_LINES);
 	glVertex3f(2.0f, 0.5f, 0.0f);
@@ -81,7 +72,6 @@ int main(int argc, char *argv[])
 {
 	WindW = 400;
 	WindH = 300;
-	alpha = 0;
 
 	glutInit(&argc, argv);
 	glutInitWindowSize(WindW, WindH);
