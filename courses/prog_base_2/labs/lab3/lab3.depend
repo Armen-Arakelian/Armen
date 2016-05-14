@@ -1,0 +1,43 @@
+# depslib dependency file v1.0
+1463228345 source:d:\program files (x86)\codeblocks_projects\prog_base2\lab3\automata.c
+	<stdio.h>
+	<stdlib.h>
+	"event.h"
+	"list.h"
+	"automata.h"
+
+1463162930 d:\program files (x86)\codeblocks_projects\prog_base2\lab3\event.h
+
+1463163944 d:\program files (x86)\codeblocks_projects\prog_base2\lab3\list.h
+	"event.h"
+
+1463225351 d:\program files (x86)\codeblocks_projects\prog_base2\lab3\automata.h
+	"list.h"
+
+1463225300 d:\program files (x86)\codeblocks_projects\prog_base2\lab3\user.h
+	"event.h"
+	"automata.h"
+
+1463162930 source:d:\program files (x86)\codeblocks_projects\prog_base2\lab3\list.c
+	<stdlib.h>
+	"list.h"
+	"event.h"
+
+1463228461 source:d:\program files (x86)\codeblocks_projects\prog_base2\lab3\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<stdarg.h>
+	<stddef.h>
+	<setjmp.h>
+	<cmocka.h>
+	"automata.h"
+	"user.h"
+
+1463221504 source:d:\program files (x86)\codeblocks_projects\prog_base2\lab3\user.c
+	<stdio.h>
+	<stdlib.h>
+	"event.h"
+	"user.h"
+	"automata.h"
+
