@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1463832662 source:d:\program files (x86)\codeblocks_projects\prog_base2\kr1\krtest\main.c
+	<stdlib.h>
+	<stdarg.h>
+	<stddef.h>
+	<setjmp.h>
+	<cmocka.h>
+	"onlineTv.h"
+	"list.h"
+
+1463775588 d:\program files (x86)\codeblocks_projects\prog_base2\kr1\krtest\list.h
+	<stdlib.h>
+
+1463831514 d:\program files (x86)\codeblocks_projects\prog_base2\kr1\krtest\onlinetv.h
+	"list.h"
+

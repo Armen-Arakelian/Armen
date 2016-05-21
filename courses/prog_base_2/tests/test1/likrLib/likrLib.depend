@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1463830944 source:d:\program files (x86)\codeblocks_projects\prog_base2\kr1\likrlib\main.c
+	<stdio.h>
+	<stdlib.h>
+	"OnlineTv.h"
+	"list.h"
+
+1463830887 d:\program files (x86)\codeblocks_projects\prog_base2\kr1\likrlib\onlinetv.h
+	"list.h"
+
+1463775588 d:\program files (x86)\codeblocks_projects\prog_base2\kr1\likrlib\list.h
+	<stdlib.h>
+

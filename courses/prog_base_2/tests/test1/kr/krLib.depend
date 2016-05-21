@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1463775588 source:d:\program files (x86)\codeblocks_projects\prog_base2\kr1\krlib\list.c
+	<stdlib.h>
+	"list.h"
+
+1463775588 d:\program files (x86)\codeblocks_projects\prog_base2\kr1\krlib\list.h
+	<stdlib.h>
+
+1385320480 source:d:\program files (x86)\codeblocks_projects\prog_base2\kr1\krlib\main.c
+
+1463831514 source:d:\program files (x86)\codeblocks_projects\prog_base2\kr1\krlib\onlinetv.c
+	<stdio.h>
+	<stdlib.h>
+	"list.h"
+	"onlineTv.h"
+
+1463831514 d:\program files (x86)\codeblocks_projects\prog_base2\kr1\krlib\onlinetv.h
+	"list.h"
+
