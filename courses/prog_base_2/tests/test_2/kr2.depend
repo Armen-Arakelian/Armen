@@ -1,0 +1,40 @@
+# depslib dependency file v1.0
+1463806279 source:d:\program files (x86)\codeblocks_projects\prog_base2\kr2\cjson.c
+	<string.h>
+	<stdio.h>
+	<math.h>
+	<stdlib.h>
+	<float.h>
+	<limits.h>
+	<ctype.h>
+	"cJSON.h"
+
+1463806279 d:\program files (x86)\codeblocks_projects\prog_base2\kr2\cjson.h
+
+1464426791 source:d:\program files (x86)\codeblocks_projects\prog_base2\kr2\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"socket.h"
+	"server.h"
+
+1464417854 d:\program files (x86)\codeblocks_projects\prog_base2\kr2\socket.h
+
+1464426499 d:\program files (x86)\codeblocks_projects\prog_base2\kr2\server.h
+	<stdio.h>
+	<stdlib.h>
+	"socket.h"
+
+1464437561 source:d:\program files (x86)\codeblocks_projects\prog_base2\kr2\server.c
+	<stdio.h>
+	<stdlib.h>
+	<stddef.h>
+	"string.h"
+	"socket.h"
+	"server.h"
+	"cJSON.h"
+
+1464430621 source:d:\program files (x86)\codeblocks_projects\prog_base2\kr2\socket.c
+	<winsock2.h>
+	"socket.h"
+
