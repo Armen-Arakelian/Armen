@@ -113,18 +113,13 @@ int main()
 	coinTexture.setSmooth(true);
 	coinSprite.setTexture(coinTexture);
 
-	Texture Skybg;
-	Texture hillsBg;
-	Skybg.loadFromFile("images/hills.png");
-	Skybg.setRepeated(true);
-	Sprite sBackground(Skybg);
-	hillsBg.loadFromFile("images/bg.jpg");
-	hillsBg.setRepeated(true);
-	Sprite hBackground(hillsBg);
-	sBackground.setTextureRect(IntRect(0, 0, 5000, 411));
-	sBackground.setPosition(-2000, 100);
-	hBackground.setTextureRect(IntRect(0, 0, 5000, 411));
-	hBackground.setPosition(-2000, 0);
+	Texture bg;
+	bg.loadFromFile("images/bg.jpg");
+	bg.setRepeated(true);
+	Sprite background;
+	background.setTexture(bg);
+	background.setTextureRect(IntRect(0, 0, 5000, 411));
+	background.setPosition(-2000, 0);
 
 	std::vector<Line> lines;
 
@@ -160,7 +155,7 @@ int main()
 			line.sprite = object[obj]; 
 			line.type = OBSTACLE;
 		}
-		if (i % 50 == 0)
+		if (i % 30 == 0)
 		{ 
 			line.spriteX = coinSide[position >=0 ? (position + 1) : (position - 1)]; 
 			line.sprite = coinSprite; 
@@ -237,8 +232,7 @@ int main()
 		while (pos < 0) pos += N*segL;
 
 		app.clear(Color(105, 205, 4));
-		//app.draw(sBackground);
-		app.draw(hBackground);
+		app.draw(background);
 		int startPos = pos / segL;
 		int camH = lines[startPos].y + H;
 
@@ -275,16 +269,15 @@ int main()
 		if (isCoinTook)
 		{
 			Effect * effect = new Effect();
-			effect->addEffect("images/Effects_coin.png", app);
+			effect->addEffect("images/Effects_coin.png", app, 500, 500);
 			isCoinTook = 0;
 		}
 
 		if (isCrashed)
 		{
 			Effect * effect = new Effect();
-			effect->addEffect("images/Effects_coin.png", app);
+			effect->addEffect("images/crashEffect.jpg", app, 250, 450);
 			app.display();
-			isCrashed = 0;
 			Time t = milliseconds(1000);
 			sleep(t);
 			exit(0);
