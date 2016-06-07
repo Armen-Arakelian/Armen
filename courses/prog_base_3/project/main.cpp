@@ -2,6 +2,7 @@
 #include "Quad.h"
 #include "Segment.h"
 #include "Player.h"
+#include "Effect.h"
 
 using namespace sf;
 
@@ -18,6 +19,13 @@ typedef enum sideStatus
 	RIGHT
 } sideStatus;
 
+typedef enum objectType
+{
+	OBSTACLE,
+	COIN, 
+	OTHER
+} objectType;
+
 struct Line
 {
 	float x, y, z; //3d center of line
@@ -25,6 +33,7 @@ struct Line
 	float  spriteX, clip, scale;
 	Sprite sprite;
 	sideStatus status;
+	objectType type;
 
 
 	Line()
@@ -40,7 +49,7 @@ struct Line
 		W = scale * roadW  * width / 2;
 	}
 
-	void drawSprite(RenderWindow &app, int lineNum)
+	void drawSprite(RenderWindow &app, int lineNum, int * isCoinTook, int * isCrashed)
 	{
 		Sprite s = sprite;
 		int w = s.getTextureRect().width;
@@ -58,10 +67,15 @@ struct Line
 		if (clipH < 0) clipH = 0;
 
 		if (clipH >= destH) return;
-		if (destY > -700 && destY < -200 && status == lineNum)
+		if (destY > -600 && destY < 0 && type == OBSTACLE && status == lineNum)
 		{
-			printf("%f\n", destY);
-			exit(1);
+			*isCrashed = 1;
+		}
+
+		if(destY > 580 && destY < 700 && type == COIN )
+		{
+			*isCoinTook = 1;
+			sprite.setPosition(100000, 100000);
 		}
 		s.setTextureRect(IntRect(0, 0, w, h - h*clipH / destH));
 		s.setScale(destW / w, destH / h);
@@ -80,8 +94,11 @@ int main()
 	//Clock clock;
 
 	Image im;
-	Texture textures[50];
-	Sprite object[50];
+	Image coinImage;
+	Texture coinTexture;
+	Texture textures[20];
+	Sprite object[20];
+	Sprite coinSprite;
 	for (int i = 1;i <= 7;i++)
 	{
 		im.loadFromFile("images/" + std::to_string(i) + ".png");
@@ -90,13 +107,18 @@ int main()
 		textures[i].setSmooth(true);
 		object[i].setTexture(textures[i]);
 	}
+	coinImage.loadFromFile("images/coin.png");
+	coinImage.createMaskFromColor(Color(0, 0, 0));
+	coinTexture.loadFromImage(coinImage);
+	coinTexture.setSmooth(true);
+	coinSprite.setTexture(coinTexture);
 
 	Texture Skybg;
 	Texture hillsBg;
 	Skybg.loadFromFile("images/hills.png");
 	Skybg.setRepeated(true);
 	Sprite sBackground(Skybg);
-	hillsBg.loadFromFile("images/bg.png");
+	hillsBg.loadFromFile("images/bg.jpg");
 	hillsBg.setRepeated(true);
 	Sprite hBackground(hillsBg);
 	sBackground.setTextureRect(IntRect(0, 0, 5000, 411));
@@ -111,9 +133,10 @@ int main()
 		Line line;
 		line.z = i*segL;
 
-		double side[4] = {-1.6, -0.5, 0.5 };
-		int r = rand() % 3;
-		switch (r)
+		double side[3] = {-1.3, -0.5, 0.2};
+		double coinSide[3] = { -3, 0, 6};
+		int position = rand() % 3;
+		switch (position)
 		{
 		case 0:
 			line.status = LEFT;
@@ -127,12 +150,22 @@ int main()
 		default:
 			break;
 		}
-		int obj = rand() % 6;
+		int obj = rand() % 2 + 1;
 		//if (i < 10 && i % 20 == 0) { line.spriteX = -2.5; line.sprite = object[5]; }
 		//if (i % 17 == 0) { line.spriteX = 2.0; line.sprite = object[6]; }
 		//if (i>800 && i % 20 == 0) { line.spriteX = -0.7; line.sprite = object[4]; }
-		if (i>100 && i % 20 == 0) { line.spriteX = side[r]; line.sprite = object[3]; }
-
+		if (i>50 && i % 20 == 0) 
+		{ 
+			line.spriteX = side[position]; 
+			line.sprite = object[obj]; 
+			line.type = OBSTACLE;
+		}
+		if (i % 50 == 0)
+		{ 
+			line.spriteX = coinSide[position >=0 ? (position + 1) : (position - 1)]; 
+			line.sprite = coinSprite; 
+			line.type = COIN;
+		}
 		//if (i>750) line.y = sin(i / 30.0) * 1500;
 
 		lines.push_back(line);
@@ -150,6 +183,9 @@ int main()
 	int lineNum = 0;
 	int H = 1500;
 	int up = 0;
+	int movingFlag = 0;
+	int isCoinTook = 0;
+	int isCrashed = 0;
 
 	while (app.isOpen())
 	{
@@ -165,16 +201,20 @@ int main()
 		time = time / 800;*/
 		int speed = 800;
 
-		if (lineNum != 1 && Keyboard::isKeyPressed(Keyboard::Right))
+		if (lineNum != 1 && !movingFlag && Keyboard::isKeyPressed(Keyboard::Right))
 		{
 			playerX += 0.65;
 			lineNum++;
+			movingFlag = 5;
 		}
-		if (lineNum != -1 && Keyboard::isKeyPressed(Keyboard::Left))
+		if (lineNum != -1 && !movingFlag && Keyboard::isKeyPressed(Keyboard::Left))
 		{
 			playerX -= 0.65;
 			lineNum--;
+			movingFlag = 5;
 		}
+		if (movingFlag)
+			movingFlag--;
 
 		if (up == 1)
 		{
@@ -228,10 +268,27 @@ int main()
 
 		////////draw objects////////
 		for (int n = startPos + 300; n > startPos; n--)
-			lines[n%N].drawSprite(app, lineNum);
-			
+			lines[n%N].drawSprite(app, lineNum, &isCoinTook, &isCrashed);
+		
 		player->drawPlayer(app);
-		//
+
+		if (isCoinTook)
+		{
+			Effect * effect = new Effect();
+			effect->addEffect("images/Effects_coin.png", app);
+			isCoinTook = 0;
+		}
+
+		if (isCrashed)
+		{
+			Effect * effect = new Effect();
+			effect->addEffect("images/Effects_coin.png", app);
+			app.display();
+			isCrashed = 0;
+			Time t = milliseconds(1000);
+			sleep(t);
+			exit(0);
+		}
 		app.display();
 	}
 
