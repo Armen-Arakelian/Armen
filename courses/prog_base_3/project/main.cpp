@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <sstream>
 #include "Quad.h"
 #include "Segment.h"
 #include "Player.h"
@@ -67,16 +68,12 @@ struct Line
 		if (clipH < 0) clipH = 0;
 
 		if (clipH >= destH) return;
-		if (destY > -600 && destY < 0 && type == OBSTACLE && status == lineNum)
-		{
-			*isCrashed = 1;
-		}
 
-		if(destY > 580 && destY < 700 && type == COIN )
-		{
+		if (destY > -600 && destY < 0 && type == OBSTACLE && status == lineNum)
+			*isCrashed = 1;
+		if(destY > 500 && destY < 600 && type == COIN && status == lineNum)
 			*isCoinTook = 1;
-			sprite.setPosition(100000, 100000);
-		}
+
 		s.setTextureRect(IntRect(0, 0, w, h - h*clipH / destH));
 		s.setScale(destW / w, destH / h);
 		s.setPosition(destX, destY);
@@ -91,7 +88,7 @@ int main()
 	RenderWindow app(VideoMode(width, height), "Run game!");
 	app.setFramerateLimit(60);
 
-	//Clock clock;
+	Clock clock;
 
 	Image im;
 	Image coinImage;
@@ -99,7 +96,7 @@ int main()
 	Texture textures[20];
 	Sprite object[20];
 	Sprite coinSprite;
-	for (int i = 1;i <= 7;i++)
+	for (int i = 1;i <= 11;i++)
 	{
 		im.loadFromFile("images/" + std::to_string(i) + ".png");
 		im.createMaskFromColor(Color(255,255,255));
@@ -129,7 +126,7 @@ int main()
 		line.z = i*segL;
 
 		double side[3] = {-1.3, -0.5, 0.2};
-		double coinSide[3] = { -3, 0, 6};
+		double coinSide[3] = { -6, 0, 6};
 		int position = rand() % 3;
 		switch (position)
 		{
@@ -145,23 +142,43 @@ int main()
 		default:
 			break;
 		}
-		int obj = rand() % 2 + 1;
-		//if (i < 10 && i % 20 == 0) { line.spriteX = -2.5; line.sprite = object[5]; }
-		//if (i % 17 == 0) { line.spriteX = 2.0; line.sprite = object[6]; }
-		//if (i>800 && i % 20 == 0) { line.spriteX = -0.7; line.sprite = object[4]; }
-		if (i>50 && i % 20 == 0) 
-		{ 
-			line.spriteX = side[position]; 
-			line.sprite = object[obj]; 
+		int obj = rand() % 4 + 1;
+		if (i % 31 == 0) {line.spriteX = 3.0; line.sprite = object[9]; line.type = OTHER;}
+		if (i % 13 == 0) { line.spriteX = -3.0; line.sprite = object[8]; line.type = OTHER; }
+		if (i % 27 == 0) { line.spriteX = 0.5; line.sprite = object[11]; line.type = OTHER; }
+		if (i % 7 == 0) { line.spriteX = rand() % 25 + 3; line.sprite = object[10]; line.type = OTHER; }
+		if (i % 6 == 0) { line.spriteX = rand() % 25 - 28; line.sprite = object[6]; line.type = OTHER; }
+		if (i % 511 == 0) { line.spriteX = -4; line.sprite = object[5]; line.type = OTHER; }
+		int typeFlag = 0;
+		if (i>50 && i % 17 == 0)
+		{
+			line.spriteX = side[position];
+			line.sprite = object[obj];
 			line.type = OBSTACLE;
+			typeFlag = 1;
 		}
-		if (i % 30 == 0)
+		if (i % 21 == 0 && !typeFlag)
 		{ 
-			line.spriteX = coinSide[position >=0 ? (position + 1) : (position - 1)]; 
+			int coinPos = rand() % 2 + 1;
+			if (coinPos == 1)
+				line.status = MIDLE;
+			int pos = 0;
+			if (position == 0)
+			{
+				if (coinPos == 2)
+					line.status = RIGHT;
+				pos = coinPos;
+			}
+			if (position == 2)
+			{
+				if (coinPos == 2)
+					line.status = LEFT;
+				pos = position - coinPos;
+			}
+			line.spriteX = coinSide[pos]; 
 			line.sprite = coinSprite; 
 			line.type = COIN;
 		}
-		//if (i>750) line.y = sin(i / 30.0) * 1500;
 
 		lines.push_back(line);
 	}
@@ -169,18 +186,24 @@ int main()
 	
 
 
-	Player *player = new Player("images/chuvak1.png");
-	player->setPlayer();
+	Player *player = new Player("images/chuvak.png", "images/chuvak1.png");
+
+	Font font;
+	font.loadFromFile("fonts/CyrilicOld.ttf");
+	Text text("", font, 40);
+	text.setColor(Color::Yellow);
+	text.setStyle(Text::Bold);
 
 	int N = lines.size();
 	float playerX = 0;
 	int pos = 0;
-	int lineNum = 0;
 	int H = 1500;
-	int up = 0;
+	int lineNum = 0;
 	int movingFlag = 0;
 	int isCoinTook = 0;
 	int isCrashed = 0;
+	int score = 0;
+	float currentFrame = 0;
 
 	while (app.isOpen())
 	{
@@ -191,9 +214,10 @@ int main()
 				app.close();
 		}
 
-		/*float time = clock.getElapsedTime().asMicroseconds(); //дать прошедшее время в микросекундах
-		clock.restart(); //перезагружает время
-		time = time / 800;*/
+		float time = clock.getElapsedTime().asMicroseconds(); 
+		clock.restart(); 
+		time = time / 200;
+
 		int speed = 800;
 
 		if (lineNum != 1 && !movingFlag && Keyboard::isKeyPressed(Keyboard::Right))
@@ -211,21 +235,7 @@ int main()
 		if (movingFlag)
 			movingFlag--;
 
-		if (up == 1)
-		{
-			up = 0;
-			for (int i = 1;i < 100;i++)
-				H -= 10;
-		}
 
-		if (Keyboard::isKeyPressed(Keyboard::Up) && up!=1)
-		{
-			for (int i = 1;i < 100;i++)
-				H += 10;
-			
-			up = 1;
-			//lineNum--;
-		}
 
 		pos += speed;
 		while (pos >= N*segL) pos -= N*segL;
@@ -263,14 +273,21 @@ int main()
 		////////draw objects////////
 		for (int n = startPos + 300; n > startPos; n--)
 			lines[n%N].drawSprite(app, lineNum, &isCoinTook, &isCrashed);
-		
-		player->drawPlayer(app);
 
+		currentFrame += 0.005*time; 
+		if (currentFrame > 1) currentFrame = 0;
+
+		{
+			player->setPlayer((double)time);
+			player->drawPlayer(app);
+		}
+		score++;
 		if (isCoinTook)
 		{
 			Effect * effect = new Effect();
-			effect->addEffect("images/Effects_coin.png", app, 500, 500);
+			effect->addEffect("images/Effects_coin.png", app, 525, 540);
 			isCoinTook = 0;
+			score += 10;
 		}
 
 		if (isCrashed)
@@ -282,6 +299,11 @@ int main()
 			sleep(t);
 			exit(0);
 		}
+		std::ostringstream playerScoreString; 
+		playerScoreString << score;
+		text.setString("Score :" + playerScoreString.str());
+		text.setPosition(0, 650);
+		app.draw(text);
 		app.display();
 	}
 

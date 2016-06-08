@@ -6,16 +6,15 @@ using namespace sf;
 class Player
 {
 private :
-	Texture playerTexture;
-	Sprite playerSprite;
-	String file;
-	int animation;
+	double frame;
+	Texture texture1, texture2;
+	Sprite sprite;
 
 public:
-	Player(String _file);
+	Player(String text1, String text2);
 	~Player();
 public :
-	void setPlayer();
+	void setPlayer(float time);
 	Sprite getPlayer();
 	void drawPlayer(RenderWindow &app);
 };

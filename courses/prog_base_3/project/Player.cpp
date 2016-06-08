@@ -2,10 +2,11 @@
 
 
 
-Player::Player(String _file)
+Player::Player(String text1, String text2)
 {
-	file = _file;
-	animation = 5;
+	texture1.loadFromFile(text1);
+	texture2.loadFromFile(text2);
+	frame = 0;
 }
 
 
@@ -13,32 +14,26 @@ Player::~Player()
 {
 }
 
-void Player::setPlayer()
+void Player::setPlayer(float time)
 {
-	playerTexture.loadFromFile(file);
-		if (animation > 4)
-		{
-			playerSprite.setTexture(playerTexture);
-			playerSprite.setTextureRect(IntRect(35, 164, 35, 40));
-			playerSprite.setPosition(500, 600);
-			animation--;
-		}
-		if (animation < 0)
-		{
-			playerSprite.setTexture(playerTexture);
-			playerSprite.setTextureRect(IntRect(100, 160, 35, 165));
-			playerSprite.setPosition(500, 600);
-			animation++;
-		}
-		playerSprite.setScale(3, 3);
+	frame += 0.003*time / 2;
+	if (frame > 2)
+		frame = 0;
+
+	if (frame >= 1)
+		sprite.setTexture(texture1);
+	else
+		sprite.setTexture(texture2);
+	sprite.setPosition(500, 500);
+	sprite.setScale(3, 3);
 }
 
 Sprite Player::getPlayer()
 {
-	return playerSprite;
+	return sprite;
 }
 
 void Player::drawPlayer(RenderWindow &app)
 {
-	app.draw(playerSprite);
+	app.draw(sprite);
 }
