@@ -11,10 +11,13 @@ using namespace sf;
 
 class Game
 {
+private:
+	int width;
+	int height;
 public:
-	Game();
+	Game(int _width, int _height);
 	~Game();
 public :
-	int run();
+	int run(RenderWindow &app);
 };
 

@@ -1,16 +1,9 @@
-#include <SFML/Graphics.hpp>
-#include <sstream>
-#include "Quad.h"
-#include "Segment.h"
-#include "Player.h"
-#include "Background.h"
-#include "Effect.h"
 #include "Game.h"
 
-using namespace sf;
-
-Game::Game()
+Game::Game(int _width, int _height)
 {
+	width = _width;
+	height = _height;
 }
 
 
@@ -18,8 +11,6 @@ Game::~Game()
 {
 }
 
-const int width = 1024;
-const int height = 768;
 const int roadW = 3000;
 const int segL = 250; //segment length
 const float camD = 0.84; //camera depth
@@ -55,7 +46,7 @@ struct Line
 		spriteX = x = y = z = 0;
 	}
 
-	void project(int camX, int camY, int camZ)
+	void project(int camX, int camY, int camZ, int width, int height)
 	{
 		scale = camD / (z - camZ);
 		X = (1 + scale*(x - camX)) * width / 2;
@@ -63,7 +54,7 @@ struct Line
 		W = scale * roadW  * width / 2;
 	}
 
-	void drawSprite(RenderWindow &app, int lineNum, int * isCoinTook, int * isCrashed)
+	void drawSprite(RenderWindow &app, int lineNum, int * isCoinTook, int * isCrashed, int width)
 	{
 		Sprite s = sprite;
 		int w = s.getTextureRect().width;
@@ -98,10 +89,9 @@ struct Line
 };
 
 
-int Game::run() 
+int Game::run(RenderWindow &app)
 {
 	srand(time(NULL));
-	RenderWindow app(VideoMode(width, height), "Run game!");
 	app.setFramerateLimit(60);
 
 	Clock clock;
@@ -245,7 +235,7 @@ int Game::run()
 		for (int n = startPos; n<startPos + 300; n++)
 		{
 			Line &l = lines[n%N];
-			l.project(playerX*roadW, camH, startPos*segL - (n >= N ? N*segL : 0));
+			l.project(playerX*roadW, camH, startPos*segL - (n >= N ? N*segL : 0), width, height);
 
 			l.clip = maxy;
 			if (l.Y >= maxy) continue;
@@ -265,7 +255,7 @@ int Game::run()
 
 		////////draw objects////////
 		for (int n = startPos + 300; n > startPos; n--)
-			lines[n%N].drawSprite(app, lineNum, &isCoinTook, &isCrashed);
+			lines[n%N].drawSprite(app, lineNum, &isCoinTook, &isCrashed, width);
 
 		currentFrame += 0.005*time;
 		if (currentFrame > 1) currentFrame = 0;
@@ -289,7 +279,8 @@ int Game::run()
 			effect->addEffect("images/crashEffect.jpg", app, 250, 450);
 			app.display();
 			sleep(milliseconds(5000));
-			exit(0);
+			break;
+			//exit(0);
 		}
 		std::ostringstream playerScoreString;
 		playerScoreString << score;

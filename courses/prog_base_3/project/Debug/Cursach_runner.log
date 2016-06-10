@@ -1,34 +1,14 @@
-﻿Build started 10.06.2016 14:00:14.
+﻿Build started 10.06.2016 18:41:32.
      1>Project "C:\Users\ASA\Documents\Visual Studio 2015\Projects\Cursach_runner\Cursach_runner\Cursach_runner.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         D:\Program Files (x86)\VC\bin\CL.exe /c /I"D:\Program Files (x86)\all libs\SFML-2.3.2\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D SFML_DYNAMIC /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Game.cpp
-         Game.cpp
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(25): warning C4305: 'initializing': truncation from 'double' to 'float'
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(93): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(103): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(142): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(152): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(153): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(158): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(169): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(210): warning C4244: 'initializing': conversion from 'sf::Int64' to 'float', possible loss of data
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(218): warning C4305: '+=': truncation from 'double' to 'float'
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(224): warning C4305: '-=': truncation from 'double' to 'float'
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(240): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(248): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(250): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(252): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(259): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(260): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(260): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(261): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(270): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(274): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-     1>c:\users\asa\documents\visual studio 2015\projects\cursach_runner\cursach_runner\game.cpp(318): warning C4715: 'getSide': not all control paths return a value
+         D:\Program Files (x86)\VC\bin\CL.exe /c /I"D:\Program Files (x86)\all libs\SFML-2.3.2\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D SFML_DYNAMIC /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Menu.cpp
+         Menu.cpp
        Link:
          D:\Program Files (x86)\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\ASA\Documents\Visual Studio 2015\Projects\Cursach_runner\Debug\Cursach_runner.exe" /INCREMENTAL /NOLOGO /LIBPATH:"D:\Program Files (x86)\all libs\SFML-2.3.2\lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" "sfml-audio-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\ASA\Documents\Visual Studio 2015\Projects\Cursach_runner\Debug\Cursach_runner.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\ASA\Documents\Visual Studio 2015\Projects\Cursach_runner\Debug\Cursach_runner.lib" /MACHINE:X86 Debug\Background.obj
          Debug\Effect.obj
          Debug\Game.obj
+         Debug\LeaderBord.obj
+         Debug\Menu.obj
          Debug\Player.obj
          Debug\main.obj
          Debug\Quad.obj
@@ -38,4 +18,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:04.80
+Time Elapsed 00:00:04.76
