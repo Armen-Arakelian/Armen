@@ -12,7 +12,7 @@ Effect::~Effect()
 {
 }
 
-void Effect::addEffect(String file, RenderWindow &app)
+void Effect::addEffect(String file, RenderWindow &app, double x, double y)
 {
 	Image EffectImage;
 	EffectImage.loadFromFile(file);
@@ -21,6 +21,6 @@ void Effect::addEffect(String file, RenderWindow &app)
 	EffectTexture.loadFromImage(EffectImage);
 	Sprite EffectSprite;
 	EffectSprite.setTexture(EffectTexture);
-	EffectSprite.setPosition(500, 500);
+	EffectSprite.setPosition(x, y);
 	app.draw(EffectSprite);
 }

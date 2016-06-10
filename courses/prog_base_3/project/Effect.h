@@ -10,5 +10,5 @@ public:
 	~Effect();
 
 public:
-	void addEffect(String file, RenderWindow &app);
+	void addEffect(String file, RenderWindow &app, double x, double y);
 };
