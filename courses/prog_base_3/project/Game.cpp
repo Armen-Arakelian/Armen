@@ -75,7 +75,7 @@ struct Line
 
 		if (destY > -600 && destY < 0 && type == OBSTACLE && status == lineNum)
 			*isCrashed = 1;
-		if (destY > 480 && destY < 700 && type == COIN && status == lineNum)
+		if (destY > 484 && destY < 526 && type == COIN && status == lineNum)
 		{
 			*isCoinTook = 1;
 			sprite.setColor(Color(0, 0, 0, 0));
@@ -95,6 +95,12 @@ int Game::run(RenderWindow &app)
 	app.setFramerateLimit(60);
 
 	Clock clock;
+
+	Music music;
+	SoundBuffer coinSoundBuffer;
+	SoundBuffer crashSoundBuffer;
+	Sound coinSound;
+	Sound crashSound;
 
 	Image im;
 	Image coinImage;
@@ -188,6 +194,15 @@ int Game::run(RenderWindow &app)
 	int score = 0;
 	float currentFrame = 0;
 
+	music.openFromFile("sounds/gameMusic.ogg");
+	music.play();
+	music.setLoop(true); 
+	coinSoundBuffer.loadFromFile("sounds/coin.ogg");
+	coinSound.setBuffer(coinSoundBuffer);
+	crashSoundBuffer.loadFromFile("sounds/explosion.ogg");
+	crashSound.setBuffer(crashSoundBuffer);
+	coinSound.setVolume(5);
+
 	while (app.isOpen())
 	{
 		Event e;
@@ -271,6 +286,7 @@ int Game::run(RenderWindow &app)
 			effect->addEffect("images/Effects_coin.png", app, 525, 540);
 			isCoinTook = 0;
 			score += 10;
+			coinSound.play();
 		}
 
 		if (isCrashed)
@@ -278,9 +294,9 @@ int Game::run(RenderWindow &app)
 			Effect * effect = new Effect();
 			effect->addEffect("images/crashEffect.jpg", app, 250, 450);
 			app.display();
+			crashSound.play();
 			sleep(milliseconds(5000));
 			break;
-			//exit(0);
 		}
 		std::ostringstream playerScoreString;
 		playerScoreString << score;
