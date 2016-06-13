@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1465822549 source:d:\program files (x86)\codeblocks_projects\prog_base2\lab 2\lab2app\main.c
+	<stdio.h>
+	<stdlib.h>
+	"list.h"
+	"blog.h"
+
+1460041556 d:\program files (x86)\codeblocks_projects\prog_base2\lab 2\lab2app\queue.h
+
+1464162056 d:\program files (x86)\codeblocks_projects\prog_base2\lab 2\lab2app\list.h
+	<stdlib.h>
+
+1465821840 d:\program files (x86)\codeblocks_projects\prog_base2\lab 2\lab2app\blog.h
+
